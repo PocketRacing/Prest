@@ -1,0 +1,3160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#08090b">
+<title>ЖЕЛЕЗНЫЙ ТРОН — Война королевств</title>
+
+<style>
+*{
+ box-sizing:border-box;
+ -webkit-tap-highlight-color:transparent
+}
+
+html,body{
+ margin:0;
+ padding:0;
+ width:100%;
+ min-height:100%;
+ background:#07080a;
+ color:#e9e4d7;
+ font-family:Georgia,"Times New Roman",serif
+}
+
+body{
+ overflow-x:hidden;
+ background:
+ radial-gradient(circle at 50% 0%,#242019 0,#0b0c0f 35%,#050608 100%);
+}
+
+button,input,select{
+ font:inherit
+}
+
+button{
+ cursor:pointer
+}
+
+:root{
+ --gold:#c9a45c;
+ --gold2:#8e6d32;
+ --dark:#0c0e12;
+ --panel:#15171c;
+ --panel2:#1b1d23;
+ --line:#39362e;
+ --red:#8c3030;
+ --green:#52794d;
+ --blue:#455f78;
+ --text:#e9e4d7;
+ --muted:#96938b
+}
+
+#top{
+ height:68px;
+ position:sticky;
+ top:0;
+ z-index:100;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 18px;
+ background:rgba(8,9,12,.96);
+ border-bottom:1px solid #403a2c;
+ box-shadow:0 4px 25px #000
+}
+
+.logo{
+ color:var(--gold);
+ font-size:21px;
+ font-weight:bold;
+ letter-spacing:2px
+}
+
+.logo span{
+ display:block;
+ font-family:Arial,sans-serif;
+ color:#777;
+ font-size:9px;
+ letter-spacing:4px;
+ margin-top:2px
+}
+
+.topright{
+ display:flex;
+ align-items:center;
+ gap:7px;
+ font-family:Arial,sans-serif;
+ font-size:12px
+}
+
+.topStat{
+ background:#17191e;
+ border:1px solid #302f2a;
+ padding:7px 9px;
+ border-radius:5px
+}
+
+#menuBtn{
+ display:none
+}
+
+#layout{
+ display:grid;
+ grid-template-columns:235px 1fr;
+ min-height:calc(100vh - 68px)
+}
+
+aside{
+ background:#0c0e12;
+ border-right:1px solid #2f3034;
+ padding:13px 10px;
+ position:sticky;
+ top:68px;
+ height:calc(100vh - 68px);
+ overflow:auto;
+ z-index:50
+}
+
+.houseBox{
+ border:1px solid #403a2c;
+ background:#121419;
+ padding:14px;
+ margin-bottom:12px;
+ text-align:center;
+ border-radius:7px
+}
+
+.houseIcon{
+ font-size:43px;
+ margin-bottom:4px
+}
+
+.houseName{
+ color:var(--gold);
+ font-weight:bold
+}
+
+.navTitle{
+ color:#666;
+ font:10px Arial,sans-serif;
+ letter-spacing:2px;
+ margin:16px 8px 6px
+}
+
+.nav{
+ width:100%;
+ padding:11px 10px;
+ margin:3px 0;
+ color:#bbb;
+ background:transparent;
+ border:1px solid transparent;
+ border-radius:6px;
+ text-align:left
+}
+
+.nav:hover{
+ background:#181a20;
+ color:white
+}
+
+.nav.active{
+ color:#f0dfb0;
+ background:#211e18;
+ border-color:#51452e
+}
+
+main{
+ width:100%;
+ max-width:1500px;
+ margin:auto;
+ padding:22px
+}
+
+.page{
+ display:none;
+ animation:fade .18s ease
+}
+
+.page.active{
+ display:block
+}
+
+@keyframes fade{
+ from{opacity:0;transform:translateY(4px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+ margin:0 0 8px;
+ color:#e6d4a6;
+ font-size:31px
+}
+
+h2{
+ color:#d2b675;
+ margin:0 0 12px
+}
+
+h3{
+ color:#d1bd91
+}
+
+p{
+ line-height:1.5
+}
+
+.muted{
+ color:var(--muted)
+}
+
+.gold{
+ color:var(--gold)
+}
+
+.card{
+ background:linear-gradient(145deg,#17191e,#121419);
+ border:1px solid var(--line);
+ border-radius:8px;
+ padding:17px;
+ box-shadow:0 12px 35px #0005;
+ margin-bottom:14px
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:14px
+}
+
+.grid4{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:12px
+}
+
+.grid2{
+ display:grid;
+ grid-template-columns:2fr 1fr;
+ gap:14px
+}
+
+.bigNumber{
+ font-size:29px;
+ color:var(--gold);
+ font-weight:bold
+}
+
+.stat{
+ display:flex;
+ justify-content:space-between;
+ padding:9px 0;
+ border-bottom:1px solid #292b30
+}
+
+.btn{
+ border:1px solid #555149;
+ background:#24272d;
+ color:#eee;
+ padding:9px 13px;
+ border-radius:5px;
+ margin:3px;
+ transition:.15s
+}
+
+.btn:hover{
+ background:#30343b
+}
+
+.btn.goldBtn{
+ background:#6e5429;
+ border-color:#9b7941
+}
+
+.btn.goldBtn:hover{
+ background:#846634
+}
+
+.btn.danger{
+ background:#5a2525;
+ border-color:#884040
+}
+
+.btn.green{
+ background:#31502e;
+ border-color:#4f774b
+}
+
+.btn.blue{
+ background:#293e52;
+ border-color:#4b657c
+}
+
+.btn.small{
+ padding:6px 8px;
+ font-size:12px
+}
+
+.bar{
+ height:9px;
+ background:#292b30;
+ border-radius:20px;
+ overflow:hidden;
+ margin:5px 0 11px
+}
+
+.bar i{
+ display:block;
+ height:100%;
+ background:var(--gold);
+ transition:.3s
+}
+
+.bar.red i{
+ background:#963d3d
+}
+
+.bar.green i{
+ background:#557f4f
+}
+
+.bar.blue i{
+ background:#4e6f91
+}
+
+.hero{
+ display:flex;
+ gap:15px;
+ align-items:center
+}
+
+.avatar{
+ width:70px;
+ height:70px;
+ border:1px solid #66583e;
+ background:#24262b;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ font-size:35px;
+ flex:none
+}
+
+hr{
+ border:0;
+ border-top:1px solid #2c2e33;
+ margin:15px 0
+}
+
+.notice{
+ padding:12px;
+ background:#1c1e23;
+ border-left:3px solid var(--gold);
+ margin:8px 0;
+ border-radius:3px
+}
+
+.dangerNotice{
+ border-left-color:#963d3d
+}
+
+.goodNotice{
+ border-left-color:#52794d
+}
+
+table{
+ width:100%;
+ border-collapse:collapse
+}
+
+th{
+ color:var(--gold);
+ font-weight:normal
+}
+
+td,th{
+ padding:10px 8px;
+ border-bottom:1px solid #2c2e33;
+ text-align:left
+}
+
+.badge{
+ display:inline-block;
+ padding:3px 7px;
+ border:1px solid #555;
+ border-radius:10px;
+ font:11px Arial,sans-serif
+}
+
+.badge.good{
+ color:#8fbc84;
+ border-color:#4b7045
+}
+
+.badge.bad{
+ color:#d27676;
+ border-color:#713d3d
+}
+
+.badge.neutral{
+ color:#bbb
+}
+
+/* MAP */
+
+.map{
+ min-height:650px;
+ position:relative;
+ overflow:hidden;
+ border:1px solid #4b483b;
+ border-radius:10px;
+ background:
+ radial-gradient(circle at 50% 50%,#394333,#222a24 38%,#18201c 75%);
+ box-shadow:inset 0 0 100px #0008
+}
+
+.map:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ opacity:.16;
+ background-image:
+ linear-gradient(#fff 1px,transparent 1px),
+ linear-gradient(90deg,#fff 1px,transparent 1px);
+ background-size:55px 55px
+}
+
+.sea{
+ position:absolute;
+ inset:0;
+ opacity:.18;
+ background:
+ radial-gradient(ellipse at 10% 50%,#2c5365 0,transparent 35%),
+ radial-gradient(ellipse at 95% 30%,#2c5365 0,transparent 32%)
+}
+
+.realm{
+ position:absolute;
+ min-width:125px;
+ padding:12px 9px;
+ text-align:center;
+ background:#20231fdd;
+ border:1px solid #85734e;
+ border-radius:50%;
+ cursor:pointer;
+ z-index:2;
+ box-shadow:0 5px 20px #0008;
+ transition:.2s
+}
+
+.realm:hover{
+ transform:scale(1.09);
+ background:#35382f
+}
+
+.realm b{
+ display:block;
+ color:#e0c27e;
+ margin-top:4px
+}
+
+.r1{left:8%;top:13%}
+.r2{left:39%;top:7%}
+.r3{left:70%;top:13%}
+.r4{left:18%;top:45%}
+.r5{left:47%;top:39%}
+.r6{left:74%;top:50%}
+.r7{left:42%;top:73%}
+
+.capital{
+ box-shadow:0 0 0 3px #c9a45c55,0 0 30px #c9a45c33
+}
+
+/* BATTLE */
+
+.battlefield{
+ min-height:330px;
+ display:grid;
+ grid-template-columns:1fr 120px 1fr;
+ gap:12px;
+ align-items:center;
+ background:
+ linear-gradient(90deg,#261818,#141619,#18221a);
+ border:1px solid #4a3a31;
+ padding:25px;
+ border-radius:9px
+}
+
+.sideArmy{
+ text-align:center
+}
+
+.armyIcon{
+ font-size:65px
+}
+
+.vs{
+ font-size:35px;
+ color:#9d3434;
+ text-align:center;
+ font-weight:bold
+}
+
+.damage{
+ font-size:25px;
+ color:#d87878
+}
+
+#battleLog{
+ height:160px;
+ overflow:auto;
+ background:#0a0c0f;
+ padding:10px;
+ font:13px Arial,sans-serif;
+ margin-top:12px
+}
+
+/* EVENT */
+
+.event{
+ background:#17191e;
+ border:1px solid #36363a;
+ border-left:4px solid var(--gold);
+ padding:15px;
+ margin:10px 0;
+ border-radius:5px
+}
+
+.event h3{
+ margin:0 0 7px
+}
+
+/* LOG */
+
+.log{
+ background:#0a0c0f;
+ border:1px solid #292b2f;
+ border-radius:5px;
+ padding:12px;
+ height:420px;
+ overflow:auto;
+ font:13px/1.55 Arial,sans-serif
+}
+
+.log div{
+ padding:5px 0;
+ border-bottom:1px solid #17191d
+}
+
+/* CHARACTER */
+
+.character{
+ min-height:220px
+}
+
+.portrait{
+ font-size:65px;
+ text-align:center;
+ padding:10px
+}
+
+/* FORM */
+
+input,select{
+ width:100%;
+ padding:10px;
+ background:#0d0f13;
+ color:#eee;
+ border:1px solid #444;
+ border-radius:5px;
+ margin:4px 0 10px
+}
+
+label{
+ color:#aaa;
+ font:12px Arial,sans-serif
+}
+
+/* TOAST */
+
+#toast{
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ z-index:999;
+ max-width:340px;
+ padding:13px 16px;
+ background:#202329;
+ border:1px solid #675537;
+ border-radius:6px;
+ box-shadow:0 10px 35px #000;
+ display:none;
+ font-family:Arial,sans-serif
+}
+
+/* INTRO */
+
+#intro{
+ position:fixed;
+ inset:0;
+ z-index:500;
+ background:
+ radial-gradient(circle,#262117 0,#090a0d 55%,#030405 100%);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px
+}
+
+.introBox{
+ max-width:700px;
+ text-align:center;
+ border:1px solid #5b4b31;
+ padding:45px 30px;
+ background:#0c0e11ee;
+ box-shadow:0 20px 80px #000
+}
+
+.introTitle{
+ color:#d3b16a;
+ font-size:42px;
+ letter-spacing:4px
+}
+
+.introSub{
+ color:#777;
+ letter-spacing:5px;
+ font:11px Arial;
+ margin-bottom:30px
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+ .grid4{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:800px){
+ #top{height:60px}
+ #menuBtn{
+  display:inline-block
+ }
+ #layout{
+  grid-template-columns:1fr
+ }
+ aside{
+  position:fixed;
+  top:60px;
+  left:-250px;
+  width:240px;
+  height:calc(100vh - 60px);
+  transition:.2s;
+  box-shadow:15px 0 40px #000
+ }
+ aside.open{
+  left:0
+ }
+ main{
+  padding:14px
+ }
+ .topStat.hideMobile{
+  display:none
+ }
+ .grid,.grid2,.grid4{
+  grid-template-columns:1fr
+ }
+ h1{
+  font-size:26px
+ }
+ .map{
+  min-height:570px
+ }
+ .realm{
+  min-width:90px;
+  font-size:12px;
+  padding:9px 5px
+ }
+ .battlefield{
+  grid-template-columns:1fr;
+  gap:5px
+ }
+ .vs{
+  font-size:24px
+ }
+ .armyIcon{
+  font-size:40px
+ }
+ .introTitle{
+  font-size:28px
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+ <div class="introBox">
+  <div class="introTitle">ЖЕЛЕЗНЫЙ ТРОН</div>
+  <div class="introSub">ВОЙНА КОРОЛЕВСТВ</div>
+  <p>
+   Семь великих домов готовятся к войне.
+   Король мёртв. Наследник исчез.
+   Только один дом сможет получить корону.
+  </p>
+  <button class="btn goldBtn" onclick="closeIntro()">ВОЙТИ В КОРОЛЕВСТВО</button>
+ </div>
+</div>
+
+<header id="top">
+ <div class="logo">
+  ⚔ ЖЕЛЕЗНЫЙ ТРОН
+  <span>ВОЙНА КОРОЛЕВСТВ</span>
+ </div>
+
+ <div class="topright">
+  <div class="topStat hideMobile">👑 <span id="topTitle">Лорд</span></div>
+  <div class="topStat">💰 <span id="topMoney">0</span></div>
+  <div class="topStat">⚔ <span id="topArmy">0</span></div>
+  <button id="musicBtn" class="btn small" onclick="toggleMusic()">🔇 TRON</button>
+  <button id="menuBtn" class="btn small" onclick="toggleMenu()">☰</button>
+ </div>
+</header>
+
+<div id="layout">
+
+<aside id="sidebar">
+
+ <div class="houseBox">
+  <div class="houseIcon">🦅</div>
+  <div class="houseName" id="houseDisplay">Дом Ворон</div>
+  <small class="muted" id="mottoDisplay">«Сила рождается в тени»</small>
+ </div>
+
+ <div class="navTitle">КОРОЛЕВСТВО</div>
+
+ <button class="nav active" data-page="home">🏰 Совет лорда</button>
+ <button class="nav" data-page="map">🗺️ Карта</button>
+ <button class="nav" data-page="army">⚔️ Армия</button>
+ <button class="nav" data-page="battle">🔥 Поле битвы</button>
+
+ <div class="navTitle">ВЛАСТЬ</div>
+
+ <button class="nav" data-page="court">👑 Королевский двор</button>
+ <button class="nav" data-page="family">👨‍👩‍👧 Династия</button>
+ <button class="nav" data-page="diplomacy">🤝 Дипломатия</button>
+ <button class="nav" data-page="spies">🕵️ Шпионы</button>
+
+ <div class="navTitle">ВЛАДЕНИЯ</div>
+
+ <button class="nav" data-page="economy">💰 Казна</button>
+ <button class="nav" data-page="buildings">🏗️ Строительство</button>
+ <button class="nav" data-page="trade">🛒 Торговля</button>
+
+ <div class="navTitle">ИСТОРИЯ</div>
+
+ <button class="nav" data-page="events">📜 События</button>
+ <button class="nav" data-page="chronicle">📖 Летопись</button>
+ <button class="nav" data-page="achievements">🏆 Достижения</button>
+
+ <div class="navTitle">СИСТЕМА</div>
+
+ <button class="nav" data-page="settings">⚙️ Настройки</button>
+
+</aside>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+ <h1>Совет лорда</h1>
+ <p class="muted">
+  Вороньего Холма. Начало ${"843"} года. Королевство стоит на пороге большой войны.
+ </p>
+
+ <div class="grid4">
+
+  <div class="card">
+   <div class="muted">💰 Казна</div>
+   <div class="bigNumber" id="money">0</div>
+   <small>золотых</small>
+  </div>
+
+  <div class="card">
+   <div class="muted">⚔️ Войско</div>
+   <div class="bigNumber" id="armyCount">0</div>
+   <small>воинов</small>
+  </div>
+
+  <div class="card">
+   <div class="muted">👑 Влияние</div>
+   <div class="bigNumber" id="influence">0</div>
+   <small>очков</small>
+  </div>
+
+  <div class="card">
+   <div class="muted">⭐ Репутация</div>
+   <div class="bigNumber" id="reputation">0</div>
+   <small>среди знати</small>
+  </div>
+
+ </div>
+
+ <div class="grid2">
+
+  <div>
+
+   <div class="card">
+
+    <div class="hero">
+     <div class="avatar">👑</div>
+     <div>
+      <h2 id="rulerName">Лорд Эйден</h2>
+      <div class="muted" id="rulerTitle">Хранитель Вороньего Холма</div>
+     </div>
+    </div>
+
+    <hr>
+
+    <div class="stat">
+     <span>❤️ Здоровье</span>
+     <b id="health">100</b>
+    </div>
+
+    <div class="stat">
+     <span>⭐ Репутация</span>
+     <b id="rep">18</b>
+    </div>
+
+    <div class="stat">
+     <span>🍞 Провизия</span>
+     <b id="food">640</b>
+    </div>
+
+    <div class="stat">
+     <span>🗓️ Дата</span>
+     <b id="date">843 год, месяц 1</b>
+    </div>
+
+   </div>
+
+   <div class="card">
+
+    <h2>Состояние земель</h2>
+
+    <div class="stat">
+     <span>Лояльность народа</span>
+     <b id="loyalty">62%</b>
+    </div>
+    <div class="bar">
+     <i id="loyaltyBar" style="width:62%"></i>
+    </div>
+
+    <div class="stat">
+     <span>Порядок</span>
+     <b id="order">70%</b>
+    </div>
+    <div class="bar green">
+     <i id="orderBar" style="width:70%"></i>
+    </div>
+
+    <div class="stat">
+     <span>Мораль армии</span>
+     <b id="morale">75%</b>
+    </div>
+    <div class="bar blue">
+     <i id="moraleBar" style="width:75%"></i>
+    </div>
+
+   </div>
+
+  </div>
+
+  <div>
+
+   <div class="card">
+    <h2>🔥 Последние новости</h2>
+    <div id="news"></div>
+   </div>
+
+   <div class="card">
+    <h2>📜 Совет дня</h2>
+    <div class="notice">
+     <b>Не доверяй улыбкам при дворе.</b>
+     <p class="muted">
+      Союзник сегодня может стать врагом завтра.
+     </p>
+    </div>
+   </div>
+
+  </div>
+
+ </div>
+
+</section>
+
+<!-- MAP -->
+
+<section id="map" class="page">
+
+ <h1>Карта королевств</h1>
+ <p class="muted">Нажмите на владение, чтобы узнать больше.</p>
+
+ <div class="map">
+
+  <div class="sea"></div>
+
+  <div class="realm r1" onclick="inspectRealm(0)">
+   🐺
+   <b>Северные земли</b>
+   <small>Дом Хальвар</small>
+  </div>
+
+  <div class="realm r2 capital" onclick="inspectRealm(1)">
+   🦁
+   <b>Золотой берег</b>
+   <small>Дом Сера</small>
+  </div>
+
+  <div class="realm r3" onclick="inspectRealm(2)">
+   🐉
+   <b>Восточная марка</b>
+   <small>Дом Каэль</small>
+  </div>
+
+  <div class="realm r4" onclick="inspectRealm(3)">
+   🌊
+   <b>Речные земли</b>
+   <small>Дом Рейн</small>
+  </div>
+
+  <div class="realm r5 capital" onclick="inspectRealm(4)">
+   👑
+   <b>Королевская гавань</b>
+   <small>Регентский совет</small>
+  </div>
+
+  <div class="realm r6" onclick="inspectRealm(5)">
+   🦌
+   <b>Штормовой берег</b>
+   <small>Дом Торвальд</small>
+  </div>
+
+  <div class="realm r7" onclick="inspectRealm(6)">
+   🌹
+   <b>Южные сады</b>
+   <small>Дом Мирель</small>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- ARMY -->
+
+<section id="army" class="page">
+
+ <h1>Армия</h1>
+ <p class="muted">Содержание армии стоит золота и требует провизии.</p>
+
+ <div class="grid4">
+
+  <div class="card">
+   <h2>🛡️ Пехота</h2>
+   <div class="bigNumber" id="inf">500</div>
+   <p class="muted">Обычные солдаты. Дешёвы и многочисленны.</p>
+   <div class="stat"><span>Сила</span><b>1</b></div>
+   <div class="stat"><span>Цена</span><b>10 зол.</b></div>
+   <button class="btn goldBtn" onclick="recruit('inf')">Нанять 50</button>
+  </div>
+
+  <div class="card">
+   <h2>🏹 Лучники</h2>
+   <div class="bigNumber" id="arch">200</div>
+   <p class="muted">Эффективны против наступающей пехоты.</p>
+   <div class="stat"><span>Сила</span><b>1.3</b></div>
+   <div class="stat"><span>Цена</span><b>16 зол.</b></div>
+   <button class="btn goldBtn" onclick="recruit('arch')">Нанять 25</button>
+  </div>
+
+  <div class="card">
+   <h2>🐎 Рыцари</h2>
+   <div class="bigNumber" id="knights">80</div>
+   <p class="muted">Элитная тяжёлая конница.</p>
+   <div class="stat"><span>Сила</span><b>3</b></div>
+   <div class="stat"><span>Цена</span><b>130 зол.</b></div>
+   <button class="btn goldBtn" onclick="recruit('knights')">Нанять 5</button>
+  </div>
+
+  <div class="card">
+   <h2>🐺 Гвардия</h2>
+   <div class="bigNumber" id="guard">25</div>
+   <p class="muted">Личная охрана правителя.</p>
+   <div class="stat"><span>Сила</span><b>5</b></div>
+   <div class="stat"><span>Цена</span><b>300 зол.</b></div>
+   <button class="btn goldBtn" onclick="recruit('guard')">Нанять 1</button>
+  </div>
+
+ </div>
+
+ <div class="grid2">
+
+  <div class="card">
+   <h2>Военная мощь</h2>
+   <div class="bigNumber" id="power">0</div>
+
+   <div class="stat">
+    <span>Боевой дух</span>
+    <b id="armyMorale">75%</b>
+   </div>
+
+   <div class="bar blue">
+    <i id="armyMoraleBar" style="width:75%"></i>
+   </div>
+
+   <div class="stat">
+    <span>Уровень стен</span>
+    <b id="wallLevelArmy">1</b>
+   </div>
+
+   <button class="btn goldBtn" onclick="goPage('battle')">
+    ⚔️ Перейти к войне
+   </button>
+  </div>
+
+  <div class="card">
+   <h2>Содержание</h2>
+   <p>Каждый месяц армия потребляет провизию.</p>
+   <div class="stat">
+    <span>Расход еды</span>
+    <b id="foodCost">0</b>
+   </div>
+   <div class="stat">
+    <span>Жалование</span>
+    <b id="armyCost">0 зол.</b>
+   </div>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- BATTLE -->
+
+<section id="battle" class="page">
+
+ <h1>Поле битвы</h1>
+
+ <div class="card">
+
+  <div class="battlefield">
+
+   <div class="sideArmy">
+    <div class="armyIcon">🦅</div>
+    <h2>Ваше войско</h2>
+    <div class="bigNumber" id="battlePlayerPower">0</div>
+   </div>
+
+   <div class="vs">VS</div>
+
+   <div class="sideArmy">
+    <div class="armyIcon">⚔️</div>
+    <h2>Противник</h2>
+    <div class="bigNumber" id="battleEnemyPower">?</div>
+   </div>
+
+  </div>
+
+  <div id="battleStatus" class="notice">
+   На горизонте пока нет вражеской армии.
+  </div>
+
+  <button class="btn danger" onclick="startBattle()">
+   ⚔️ Начать кампанию
+  </button>
+
+  <button class="btn" onclick="raid()">
+   🐎 Провести рейд
+  </button>
+
+  <div id="battleLog"></div>
+
+ </div>
+
+</section>
+
+<!-- COURT -->
+
+<section id="court" class="page">
+
+ <h1>Королевский двор</h1>
+
+ <div class="grid">
+
+  <div class="card character">
+   <div class="portrait">🦊</div>
+   <h2>Маркус Вейн</h2>
+   <p class="muted">Десница</p>
+   <p>Опытный военный советник. Любит силу и порядок.</p>
+   <div class="stat">
+    <span>Отношение</span>
+    <b id="marcusRel">55</b>
+   </div>
+   <button class="btn" onclick="talk('Маркус')">Поговорить</button>
+  </div>
+
+  <div class="card character">
+   <div class="portrait">🦉</div>
+   <h2>Элиана Рейн</h2>
+   <p class="muted">Хозяйка шпионской сети</p>
+   <p>Никто не знает, сколько у неё ушей и глаз.</p>
+   <div class="stat">
+    <span>Отношение</span>
+    <b id="elianaRel">60</b>
+   </div>
+   <button class="btn" onclick="talk('Элиана')">Поговорить</button>
+  </div>
+
+  <div class="card character">
+   <div class="portrait">⚒️</div>
+   <h2>Боромир Клык</h2>
+   <p class="muted">Мастер оружия</p>
+   <p>Считает, что любую проблему можно решить хорошим мечом.</p>
+   <button class="btn" onclick="train()">Провести тренировку</button>
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h2>Совет лорда</h2>
+  <p>
+   Здесь собираются ваши ближайшие советники.
+   Их решения могут изменить судьбу королевства.
+  </p>
+
+  <button class="btn goldBtn" onclick="council()">Созвать совет</button>
+  <button class="btn" onclick="askCouncil('war')">Спросить о войне</button>
+  <button class="btn" onclick="askCouncil('money')">Спросить о казне</button>
+ </div>
+
+</section>
+
+<!-- FAMILY -->
+
+<section id="family" class="page">
+
+ <h1>Династия</h1>
+
+ <div class="grid2">
+
+  <div class="card">
+
+   <div class="hero">
+    <div class="avatar">👑</div>
+    <div>
+     <h2 id="familyRuler">Лорд Эйден</h2>
+     <div class="muted">Глава дома</div>
+    </div>
+   </div>
+
+   <hr>
+
+   <div class="stat">
+    <span>Возраст</span>
+    <b id="age">27</b>
+   </div>
+
+   <div class="stat">
+    <span>Здоровье</span>
+    <b id="familyHealth">100</b>
+   </div>
+
+   <div class="stat">
+    <span>Наследник</span>
+    <b id="heir">Не выбран</b>
+   </div>
+
+  </div>
+
+  <div class="card">
+   <h2>Брак</h2>
+   <p class="muted">Политический брак может изменить отношения домов.</p>
+
+   <select id="marriageSelect">
+    <option>Леди Аделина из Речных земель</option>
+    <option>Леди Селена из Золотого берега</option>
+    <option>Принцесса Мира из Южных садов</option>
+   </select>
+
+   <button class="btn goldBtn" onclick="marry()">💍 Заключить брак</button>
+  </div>
+
+ </div>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>👶 Дети</h2>
+   <div id="children">Пока нет детей.</div>
+   <button class="btn" onclick="familyEvent()">Провести семейный вечер</button>
+  </div>
+
+  <div class="card">
+   <h2>🏰 Наследование</h2>
+   <p>
+    Если правитель погибнет, власть перейдёт наследнику.
+   </p>
+   <button class="btn" onclick="chooseHeir()">Назначить наследника</button>
+  </div>
+
+  <div class="card">
+   <h2>📜 Родословная</h2>
+   <p>Дом Ворон существует уже 146 лет.</p>
+   <div class="muted">
+    Эдгар I → Рейн I → Торрен II → Эйден
+   </div>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- DIPLOMACY -->
+
+<section id="diplomacy" class="page">
+
+ <h1>Дипломатия</h1>
+
+ <div class="card">
+  <p class="muted">
+   Отношения выше 60 позволяют заключать крепкие союзы.
+   Ниже -40 — дом может объявить войну.
+  </p>
+
+  <table>
+   <thead>
+    <tr>
+     <th>Дом</th>
+     <th>Правитель</th>
+     <th>Сила</th>
+     <th>Отношения</th>
+     <th>Действия</th>
+    </tr>
+   </thead>
+   <tbody id="diplomacyTable"></tbody>
+  </table>
+ </div>
+
+</section>
+
+<!-- SPIES -->
+
+<section id="spies" class="page">
+
+ <h1>Шпионская сеть</h1>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>🕵️ Разведка</h2>
+   <div class="bigNumber" id="spies">3</div>
+   <p>Доступные агенты.</p>
+   <button class="btn goldBtn" onclick="trainSpy()">Подготовить агента — 500 зол.</button>
+  </div>
+
+  <div class="card">
+   <h2>👁️ Наблюдение</h2>
+   <p>Узнайте военную силу случайного дома.</p>
+   <button class="btn" onclick="spyMission()">Отправить шпиона</button>
+  </div>
+
+  <div class="card">
+   <h2>🗡️ Саботаж</h2>
+   <p>Попробуйте ослабить вражеский дом.</p>
+   <button class="btn danger" onclick="sabotage()">Провести саботаж</button>
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h2>Секретные донесения</h2>
+  <div id="spyReports"></div>
+ </div>
+
+</section>
+
+<!-- ECONOMY -->
+
+<section id="economy" class="page">
+
+ <h1>Казна</h1>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>💰 Золото</h2>
+   <div class="bigNumber" id="treasury">0</div>
+   <p>Доход поступает каждый игровой месяц.</p>
+   <button class="btn goldBtn" onclick="collectTaxes()">Собрать налоги сейчас</button>
+  </div>
+
+  <div class="card">
+   <h2>🏦 Доход</h2>
+   <div class="bigNumber" id="income">0</div>
+   <p>Золота в месяц.</p>
+  </div>
+
+  <div class="card">
+   <h2>💸 Расходы</h2>
+   <div class="bigNumber" id="expenses">0</div>
+   <p>Содержание армии и владений.</p>
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h2>Экономические показатели</h2>
+
+  <div class="stat">
+   <span>Состояние рынка</span>
+   <b id="marketState">Стабильный</b>
+  </div>
+
+  <div class="stat">
+   <span>Урожай</span>
+   <b id="harvest">Хороший</b>
+  </div>
+
+  <div class="stat">
+   <span>Налоги</span>
+   <b id="taxRate">Средние</b>
+  </div>
+
+  <button class="btn" onclick="changeTax('low')">Снизить налоги</button>
+  <button class="btn goldBtn" onclick="changeTax('normal')">Нормальные налоги</button>
+  <button class="btn danger" onclick="changeTax('high')">Повысить налоги</button>
+ </div>
+
+</section>
+
+<!-- BUILDINGS -->
+
+<section id="buildings" class="page">
+
+ <h1>Строительство</h1>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>🏰 Стены</h2>
+   <div class="bigNumber" id="walls">1</div>
+   <p>Увеличивают защиту замка.</p>
+   <button class="btn goldBtn" onclick="build('walls')">Улучшить — 3000</button>
+  </div>
+
+  <div class="card">
+   <h2>⚒️ Кузница</h2>
+   <div class="bigNumber" id="forge">0</div>
+   <p>Повышает силу армии.</p>
+   <button class="btn goldBtn" onclick="build('forge')">Построить — 4500</button>
+  </div>
+
+  <div class="card">
+   <h2>🌾 Амбары</h2>
+   <div class="bigNumber" id="barns">0</div>
+   <p>Увеличивают производство провизии.</p>
+   <button class="btn goldBtn" onclick="build('barns')">Построить — 2500</button>
+  </div>
+
+  <div class="card">
+   <h2>🕯️ Тайная комната</h2>
+   <div class="bigNumber" id="secretRoom">0</div>
+   <p>Увеличивает эффективность шпионов.</p>
+   <button class="btn goldBtn" onclick="build('secret')">Построить — 5000</button>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- TRADE -->
+
+<section id="trade" class="page">
+
+ <h1>Торговля</h1>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>🌾 Купить зерно</h2>
+   <p>100 провизии.</p>
+   <div class="bigNumber">300 зол.</div>
+   <button class="btn goldBtn" onclick="tradeFoodBuy()">Купить</button>
+  </div>
+
+  <div class="card">
+   <h2>🍞 Продать зерно</h2>
+   <p>100 провизии.</p>
+   <div class="bigNumber">220 зол.</div>
+   <button class="btn" onclick="tradeFoodSell()">Продать</button>
+  </div>
+
+  <div class="card">
+   <h2>🐎 Лошади</h2>
+   <p>Увеличивают мобильность армии.</p>
+   <button class="btn" onclick="buyHorses()">Купить 10 лошадей — 1000</button>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- EVENTS -->
+
+<section id="events" class="page">
+
+ <h1>События</h1>
+
+ <div class="card">
+  <p>
+   Судьба королевства меняется каждый месяц.
+   Некоторые события будут зависеть от ваших предыдущих решений.
+  </p>
+  <button class="btn goldBtn" onclick="newEvent()">🎲 Получить событие</button>
+  <button class="btn" onclick="randomCrisis()">🔥 Проверить кризис</button>
+ </div>
+
+ <div id="eventList"></div>
+
+</section>
+
+<!-- CHRONICLE -->
+
+<section id="chronicle" class="page">
+
+ <h1>Летопись дома</h1>
+
+ <div class="card">
+  <div id="chronicleLog" class="log"></div>
+ </div>
+
+</section>
+
+<!-- ACHIEVEMENTS -->
+
+<section id="achievements" class="page">
+
+ <h1>Достижения</h1>
+
+ <div class="grid">
+
+  <div class="card">
+   <h2>🏰 Первый замок</h2>
+   <p>Укрепить стены хотя бы один раз.</p>
+   <b id="achWall">🔒 Не выполнено</b>
+  </div>
+
+  <div class="card">
+   <h2>⚔️ Полководец</h2>
+   <p>Одержать 5 побед.</p>
+   <b id="achWar">🔒 Не выполнено</b>
+  </div>
+
+  <div class="card">
+   <h2>🤝 Дипломат</h2>
+   <p>Заключить 3 союза.</p>
+   <b id="achDip">🔒 Не выполнено</b>
+  </div>
+
+  <div class="card">
+   <h2>💰 Богач</h2>
+   <p>Накопить 50 000 золота.</p>
+   <b id="achRich">🔒 Не выполнено</b>
+  </div>
+
+  <div class="card">
+   <h2>👑 Король</h2>
+   <p>Получить корону.</p>
+   <b id="achKing">🔒 Не выполнено</b>
+  </div>
+
+  <div class="card">
+   <h2>🐉 Легенда</h2>
+   <p>Дожить до 850 года.</p>
+   <b id="achLegend">🔒 Не выполнено</b>
+  </div>
+
+ </div>
+
+</section>
+
+<!-- SETTINGS -->
+
+<section id="settings" class="page">
+
+ <h1>Настройки</h1>
+
+ <div class="grid2">
+
+  <div class="card">
+
+   <h2>👤 Правитель</h2>
+
+   <label>Имя</label>
+   <input id="nameInput" placeholder="Имя правителя">
+
+   <label>Название дома</label>
+   <input id="houseInput" placeholder="Название дома">
+
+   <label>Девиз</label>
+   <input id="mottoInput" placeholder="Девиз дома">
+
+   <button class="btn goldBtn" onclick="changeIdentity()">Сохранить герб и имя</button>
+
+  </div>
+
+  <div class="card">
+
+   <h2>💾 Сохранение</h2>
+
+   <button class="btn goldBtn" onclick="saveGame()">💾 Сохранить</button>
+   <button class="btn" onclick="loadGame()">↻ Загрузить</button>
+   <button class="btn" onclick="exportSave()">📋 Экспорт</button>
+   <button class="btn" onclick="importSave()">📥 Импорт</button>
+
+   <hr>
+
+   <button class="btn danger" onclick="resetGame()">☠️ Начать новую игру</button>
+
+  </div>
+
+ </div>
+
+ <div class="card">
+  <h2>🎵 Музыка</h2>
+  <p>
+   Встроенный атмосферный трек <b class="gold">TRON</b>.
+   Никаких внешних файлов не требуется.
+  </p>
+  <button class="btn goldBtn" onclick="toggleMusic()">🔊 TRON</button>
+ </div>
+
+</section>
+
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+
+/* =========================================================
+   ЖЕЛЕЗНЫЙ ТРОН
+   ПОЛНОСТЬЮ ОДИН HTML
+========================================================= */
+
+/* -------------------------
+   STATE
+------------------------- */
+
+const DEFAULT={
+ name:"Эйден",
+ title:"Лорд",
+ house:"Дом Ворон",
+ motto:"Сила рождается в тени",
+
+ money:12400,
+ food:640,
+ influence:12,
+ reputation:18,
+ health:100,
+ age:27,
+
+ loyalty:62,
+ order:70,
+ morale:75,
+
+ year:843,
+ month:1,
+
+ inf:500,
+ arch:200,
+ knights:80,
+ guard:25,
+
+ walls:1,
+ forge:0,
+ barns:0,
+ secretRoom:0,
+ horses:0,
+
+ spies:3,
+
+ wins:0,
+ losses:0,
+ alliances:0,
+ raids:0,
+
+ children:[],
+ married:false,
+ spouse:"Не выбран",
+ heir:"Не выбран",
+
+ tax:"normal",
+
+ realms:[
+  {name:"Северные земли",ruler:"Лорд Хальвар",rel:35,power:1600},
+  {name:"Золотой берег",ruler:"Леди Сера",rel:-10,power:2200},
+  {name:"Восточная марка",ruler:"Принц Каэль",rel:20,power:1900},
+  {name:"Речные земли",ruler:"Дом Рейн",rel:50,power:900},
+  {name:"Королевская гавань",ruler:"Регентский совет",rel:-25,power:3000},
+  {name:"Штормовой берег",ruler:"Лорд Торвальд",rel:5,power:1800},
+  {name:"Южные сады",ruler:"Леди Мирель",rel:45,power:1200}
+ ],
+
+ logs:[
+  "843/1 — Лорд Эйден принимает Вороньего Холма.",
+  "843/1 — Король мёртв. Великие дома начинают борьбу.",
+  "843/1 — На северных границах замечены неизвестные войска."
+ ],
+
+ news:[
+  "Королевская гавань закрыла ворота.",
+  "Три дома объявили мобилизацию.",
+  "По дорогам распространяются слухи о пропавшем наследнике."
+ ]
+};
+
+let S=loadState();
+
+/* -------------------------
+   STORAGE
+------------------------- */
+
+function loadState(){
+ try{
+  const x=localStorage.getItem("IRON_THRONE_SAVE");
+  if(x){
+   const parsed=JSON.parse(x);
+   return deepMerge(structuredClone(DEFAULT),parsed);
+  }
+ }catch(e){}
+ return structuredClone(DEFAULT);
+}
+
+function deepMerge(base,data){
+ for(const k in data){
+  if(data[k]!==null && typeof data[k]==="object" &&
+     !Array.isArray(data[k]) &&
+     typeof base[k]==="object"){
+   base[k]=deepMerge(base[k],data[k]);
+  }else{
+   base[k]=data[k];
+  }
+ }
+ return base;
+}
+
+function saveGame(){
+ localStorage.setItem("IRON_THRONE_SAVE",JSON.stringify(S));
+ toast("💾 Игра сохранена");
+}
+
+function loadGame(){
+ S=loadState();
+ render();
+ toast("↻ Сохранение загружено");
+}
+
+function exportSave(){
+ const txt=btoa(unescape(encodeURIComponent(JSON.stringify(S))));
+ prompt("Скопируйте код сохранения:",txt);
+}
+
+function importSave(){
+ const txt=prompt("Вставьте код сохранения:");
+ if(!txt)return;
+ try{
+  S=JSON.parse(decodeURIComponent(escape(atob(txt))));
+  saveGame();
+  render();
+  toast("📥 Сохранение импортировано");
+ }catch(e){
+  toast("Ошибка импорта");
+ }
+}
+
+function resetGame(){
+ if(!confirm("Начать новую династию? Текущее сохранение будет заменено."))return;
+ S=structuredClone(DEFAULT);
+ saveGame();
+ render();
+ toast("Новая династия началась");
+}
+
+/* -------------------------
+   HELPERS
+------------------------- */
+
+function money(n){
+ return Math.floor(n).toLocaleString("ru-RU");
+}
+
+function clamp(n,min,max){
+ return Math.max(min,Math.min(max,n));
+}
+
+function toast(text){
+ const el=document.getElementById("toast");
+ el.innerHTML=text;
+ el.style.display="block";
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>{
+  el.style.display="none";
+ },2800);
+}
+
+function log(text){
+ S.logs.unshift(
+  `${S.year}/${S.month} — ${text}`
+ );
+ if(S.logs.length>150)S.logs.length=150;
+ renderLog();
+}
+
+function news(text){
+ S.news.unshift(text);
+ if(S.news.length>7)S.news.length=7;
+}
+
+function totalArmy(){
+ return S.inf+S.arch+S.knights+S.guard;
+}
+
+function militaryPower(){
+ return Math.floor(
+  S.inf+
+  S.arch*1.3+
+  S.knights*3+
+  S.guard*5+
+  S.walls*250+
+  S.forge*250+
+  S.horses*2
+ );
+}
+
+function income(){
+ let base=1850;
+ base+=S.barns*350;
+ base+=S.walls*100;
+ if(S.tax==="low")base*=.65;
+ if(S.tax==="high")base*=1.35;
+ return Math.floor(base);
+}
+
+function expenses(){
+ return Math.floor(
+  S.inf*1+
+  S.arch*1.3+
+  S.knights*3.5+
+  S.guard*5+
+  S.walls*80+
+  S.forge*100+
+  S.secretRoom*100
+ );
+}
+
+function foodCost(){
+ return Math.max(
+  20,
+  Math.floor(totalArmy()/8)
+ );
+}
+
+/* -------------------------
+   NAVIGATION
+------------------------- */
+
+function goPage(id){
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.remove("active");
+ });
+
+ const page=document.getElementById(id);
+ if(page)page.classList.add("active");
+
+ document.querySelectorAll(".nav").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===id);
+ });
+
+ document.getElementById("sidebar").classList.remove("open");
+
+ if(id==="battle"){
+  document.getElementById("battlePlayerPower").textContent=money(militaryPower());
+ }
+}
+
+document.querySelectorAll(".nav").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  goPage(btn.dataset.page);
+ });
+});
+
+function toggleMenu(){
+ document.getElementById("sidebar").classList.toggle("open");
+}
+
+/* -------------------------
+   IDENTITY
+------------------------- */
+
+function changeIdentity(){
+ const n=document.getElementById("nameInput").value.trim();
+ const h=document.getElementById("houseInput").value.trim();
+ const m=document.getElementById("mottoInput").value.trim();
+
+ if(n)S.name=n;
+ if(h)S.house=h;
+ if(m)S.motto=m;
+
+ log(`Герб дома изменён. Теперь ваш дом называется ${S.house}.`);
+ saveGame();
+ render();
+}
+
+/* -------------------------
+   ARMY
+------------------------- */
+
+function recruit(type){
+
+ const data={
+  inf:{amount:50,cost:500,name:"пехотинцев"},
+  arch:{amount:25,cost:400,name:"лучников"},
+  knights:{amount:5,cost:650,name:"рыцарей"},
+  guard:{amount:1,cost:300,name:"гвардейца"}
+ };
+
+ const d=data[type];
+
+ if(S.money<d.cost){
+  toast("💰 Недостаточно золота");
+  return;
+ }
+
+ S.money-=d.cost;
+ S[type]+=d.amount;
+ S.morale=clamp(S.morale+1,0,100);
+
+ log(`Нанято ${d.amount} ${d.name}.`);
+ render();
+}
+
+function train(){
+
+ if(S.money<400){
+  toast("Нужно 400 золота");
+  return;
+ }
+
+ S.money-=400;
+ S.inf+=20;
+ S.arch+=8;
+ S.morale=clamp(S.morale+10,0,100);
+
+ log("Боромир Клык провёл большую тренировку войска.");
+ render();
+}
+
+/* -------------------------
+   BATTLE
+------------------------- */
+
+function startBattle(){
+
+ if(S.food<foodCost()){
+  toast("🍞 Армии не хватает провизии");
+  return;
+ }
+
+ const enemy=
+  700+
+  Math.floor(Math.random()*2800)+
+  S.year*2;
+
+ const player=militaryPower();
+
+ document.getElementById("battleEnemyPower").textContent=money(enemy);
+
+ const luck=.75+Math.random()*.5;
+ const finalPlayer=player*luck;
+
+ S.food-=foodCost();
+
+ if(finalPlayer>enemy){
+
+  const reward=
+   700+
+   Math.floor(Math.random()*1800);
+
+  S.money+=reward;
+  S.influence+=4;
+  S.reputation+=3;
+  S.morale=clamp(S.morale+8,0,100);
+  S.order=clamp(S.order+3,0,100);
+  S.wins++;
+
+  const captured=Math.floor(100+Math.random()*400);
+  S.food+=captured;
+
+  log(
+   `ВЕЛИКАЯ ПОБЕДА! Вражеское войско численностью ${money(enemy)} разбито. Получено ${money(reward)} золота.`
+  );
+
+  news("⚔️ Ваши войска одержали победу на поле боя!");
+
+  battleMessage(
+   "🏆 ПОБЕДА",
+   `Враг разбит. Добыча: ${money(reward)} золота.`
+  );
+
+ }else{
+
+  const lossInf=Math.floor(
+   S.inf*(.08+Math.random()*.15)
+  );
+
+  const lossArch=Math.floor(
+   S.arch*(.04+Math.random()*.1)
+  );
+
+  const lossKnight=Math.floor(
+   S.knights*(.03+Math.random()*.08)
+  );
+
+  S.inf=Math.max(0,S.inf-lossInf);
+  S.arch=Math.max(0,S.arch-lossArch);
+  S.knights=Math.max(0,S.knights-lossKnight);
+
+  S.morale=clamp(S.morale-17,0,100);
+  S.reputation=Math.max(0,S.reputation-2);
+  S.losses++;
+
+  log(
+   `ПОРАЖЕНИЕ. Потери: ${lossInf} пехоты, ${lossArch} лучников, ${lossKnight} рыцарей.`
+  );
+
+  news("☠️ Ваша армия потерпела поражение.");
+
+  battleMessage(
+   "☠️ ПОРАЖЕНИЕ",
+   "Войско отступило. Потери занесены в летопись."
+  );
+ }
+
+ render();
+}
+
+function battleMessage(title,text){
+ const el=document.getElementById("battleStatus");
+ el.innerHTML=`<b>${title}</b><p>${text}</p>`;
+}
+
+function raid(){
+
+ if(S.food<50){
+  toast("Недостаточно провизии");
+  return;
+ }
+
+ S.food-=50;
+
+ const gain=300+Math.floor(Math.random()*800);
+ const loss=Math.random()<.3;
+
+ if(loss){
+  S.money+=Math.floor(gain*.4);
+  S.morale=clamp(S.morale-4,0,100);
+  log("Рейд оказался частично успешным. Часть добычи потеряна.");
+ }else{
+  S.money+=gain;
+  S.raids++;
+  S.influence+=1;
+  log(`Рейд завершён. Добыча: ${gain} золота.`);
+ }
+
+ render();
+}
+
+/* -------------------------
+   DIPLOMACY
+------------------------- */
+
+function diplomacyAction(i,action){
+
+ const r=S.realms[i];
+
+ if(action==="gift"){
+
+  if(S.money<800){
+   toast("Нужно 800 золота");
+   return;
+  }
+
+  S.money-=800;
+  r.rel=clamp(r.rel+12,-100,100);
+
+  log(`Вы отправили подарок дому ${r.name}.`);
+
+ }
+
+ if(action==="threat"){
+
+  r.rel=clamp(r.rel-15,-100,100);
+  S.influence+=2;
+
+  log(`Вы пригрозили дому ${r.name}.`);
+
+ }
+
+ if(action==="alliance"){
+
+  if(r.rel<50){
+   toast("Отношения должны быть минимум 50");
+   return;
+  }
+
+  if(S.influence<5){
+   toast("Нужно 5 влияния");
+   return;
+  }
+
+  S.influence-=5;
+  S.alliances++;
+  r.rel=clamp(r.rel+8,-100,100);
+
+  log(`Заключён союз с ${r.name}.`);
+  news(`🤝 Дом ${r.name} заключил союз с вами.`);
+
+ }
+
+ if(action==="war"){
+
+  if(!confirm(`Объявить войну дому ${r.name}?`))return;
+
+  r.rel=-100;
+
+  log(`Вы объявили войну дому ${r.name}!`);
+  news(`🔥 Началась война с домом ${r.name}.`);
+
+ }
+
+ render();
+}
+
+function renderDiplomacy(){
+
+ const tbody=document.getElementById("diplomacyTable");
+
+ tbody.innerHTML=S.realms.map((r,i)=>{
+
+  let cls=
+   r.rel>=50?"good":
+   r.rel<=-30?"bad":"neutral";
+
+  return `
+   <tr>
+    <td><b>${r.name}</b></td>
+    <td>${r.ruler}</td>
+    <td>${money(r.power)}</td>
+    <td>
+     <span class="badge ${cls}">
+      ${r.rel}
+     </span>
+    </td>
+    <td>
+     <button class="btn small" onclick="diplomacyAction(${i},'gift')">🎁</button>
+     <button class="btn small" onclick="diplomacyAction(${i},'threat')">⚔️</button>
+     <button class="btn small goldBtn" onclick="diplomacyAction(${i},'alliance')">🤝</button>
+     <button class="btn small danger" onclick="diplomacyAction(${i},'war')">🔥</button>
+    </td>
+   </tr>
+  `;
+ }).join("");
+}
+
+/* -------------------------
+   MAP
+------------------------- */
+
+function inspectRealm(i){
+
+ const r=S.realms[i];
+
+ let status=
+  r.rel>=60?"Ваш близкий союзник.":
+  r.rel>=20?"Отношения нейтральные.":
+  r.rel>-40?"Дом относится настороженно.":
+  "Этот дом почти готов к войне.";
+
+ alert(
+ `${r.name}
+
+Правитель: ${r.ruler}
+Военная сила: ${money(r.power)}
+Отношения: ${r.rel}
+
+${status}`
+ );
+}
+
+/* -------------------------
+   COURT
+------------------------- */
+
+function talk(who){
+
+ if(who==="Маркус"){
+
+  S.influence+=1;
+  S.marcusRel=clamp((S.marcusRel||55)+3,0,100);
+
+  log("Маркус Вейн рассказал о передвижениях армий на востоке.");
+  toast("🦊 Маркус доверяет вам немного больше");
+
+ }
+
+ if(who==="Элиана"){
+
+  S.influence+=2;
+  S.spies++;
+
+  log("Элиана передала вам сведения, полученные от шпионов.");
+  toast("🦉 Элиана расширила вашу сеть");
+
+ }
+
+ render();
+}
+
+function council(){
+
+ const answers=[
+  "Десница советует укрепить стены.",
+  "Шпионка требует узнать планы соседей.",
+  "Мастер оружия предлагает увеличить армию.",
+  "Казначей предупреждает о растущих расходах."
+ ];
+
+ const text=answers[Math.floor(Math.random()*answers.length)];
+
+ log(`Совет: ${text}`);
+ toast("👑 Совет завершён");
+}
+
+function askCouncil(type){
+
+ if(type==="war"){
+  const p=militaryPower();
+  toast(`⚔️ Совет считает вашу военную мощь равной ${money(p)}.`);
+ }
+
+ if(type==="money"){
+  toast(`💰 Казначей: в казне ${money(S.money)} золота.`);
+ }
+}
+
+/* -------------------------
+   FAMILY
+------------------------- */
+
+function marry(){
+
+ if(S.married){
+  toast("Вы уже состоите в браке");
+  return;
+ }
+
+ const spouse=document.getElementById("marriageSelect").value;
+
+ if(S.money<1200){
+  toast("Свадьба требует 1200 золота");
+  return;
+ }
+
+ S.money-=1200;
+ S.married=true;
+ S.spouse=spouse;
+ S.influence+=7;
+ S.reputation+=4;
+
+ log(`Заключён политический брак: ${spouse}.`);
+ news(`💍 Лорд ${S.name} заключил политический брак.`);
+
+ render();
+}
+
+function familyEvent(){
+
+ if(!S.married){
+  toast("Сначала заключите брак");
+  return;
+ }
+
+ const chance=Math.random();
+
+ if(chance<.5){
+
+  const names=[
+   "Арден",
+   "Рейн",
+   "Эдрик",
+   "Мира",
+   "Лиана",
+   "Теон",
+   "Кай",
+   "Селия"
+  ];
+
+  const child=names[Math.floor(Math.random()*names.length)];
+
+  S.children.push({
+   name:child,
+   age:0
+  });
+
+  S.loyalty=clamp(S.loyalty+3,0,100);
+
+  log(`В династии родился ребёнок по имени ${child}.`);
+  news(`👶 В доме Ворон родился наследник.`);
+
+ }else{
+
+  S.influence+=2;
+  log("Семейный вечер прошёл спокойно.");
+ }
+
+ render();
+}
+
+function chooseHeir(){
+
+ if(!S.children.length){
+  toast("У вас пока нет детей");
+  return;
+ }
+
+ S.heir=S.children[0].name;
+ log(`Наследником назначен ${S.heir}.`);
+ render();
+}
+
+/* -------------------------
+   SPIES
+------------------------- */
+
+function trainSpy(){
+
+ if(S.money<500){
+  toast("Нужно 500 золота");
+  return;
+ }
+
+ S.money-=500;
+ S.spies++;
+
+ log("Новый агент прошёл подготовку.");
+ render();
+}
+
+function spyMission(){
+
+ if(S.spies<=0){
+  toast("Нет доступных шпионов");
+  return;
+ }
+
+ S.spies--;
+
+ const r=S.realms[
+  Math.floor(Math.random()*S.realms.length)
+ ];
+
+ const realPower=Math.floor(
+  r.power*(.85+Math.random()*.3)
+ );
+
+ const report=
+  `Агент сообщает: ${r.name} располагает примерно ${money(realPower)} воинами.`;
+
+ document.getElementById("spyReports").innerHTML=
+  `<div class="notice">${report}</div>`+
+  document.getElementById("spyReports").innerHTML;
+
+ log(`Шпионская сеть: ${report}`);
+ render();
+}
+
+function sabotage(){
+
+ if(S.spies<=0){
+  toast("Нет доступных шпионов");
+  return;
+ }
+
+ S.spies--;
+
+ const r=S.realms[
+  Math.floor(Math.random()*S.realms.length)
+ ];
+
+ if(Math.random()<.6){
+
+  const damage=Math.floor(100+Math.random()*400);
+  r.power=Math.max(200,r.power-damage);
+
+  log(`Саботаж успешен. ${r.name} потерял около ${damage} воинов.`);
+  toast("🗡️ Саботаж успешен");
+
+ }else{
+
+  S.reputation=Math.max(0,S.reputation-2);
+  log(`Саботаж провалился. Вражеские агенты узнали о вмешательстве.`);
+  toast("☠️ Агент разоблачён");
+ }
+
+ render();
+}
+
+/* -------------------------
+   ECONOMY
+------------------------- */
+
+function collectTaxes(){
+
+ const amount=income();
+
+ S.money+=amount;
+
+ S.order=clamp(S.order-2,0,100);
+
+ log(`Собраны налоги: +${money(amount)} золота.`);
+ render();
+}
+
+function changeTax(mode){
+
+ S.tax=mode;
+
+ if(mode==="low"){
+  S.loyalty=clamp(S.loyalty+8,0,100);
+  S.order=clamp(S.order+3,0,100);
+ }
+
+ if(mode==="high"){
+  S.loyalty=clamp(S.loyalty-12,0,100);
+  S.money+=400;
+ }
+
+ log(
+  mode==="low"?
+  "Налоги снижены.":
+  mode==="high"?
+  "Налоги повышены.":
+  "Налоги возвращены к нормальному уровню."
+ );
+
+ render();
+}
+
+/* -------------------------
+   BUILDINGS
+------------------------- */
+
+function build(type){
+
+ const data={
+  walls:{cost:3000,key:"walls",name:"стены"},
+  forge:{cost:4500,key:"forge",name:"кузница"},
+  barns:{cost:2500,key:"barns",name:"амбары"},
+  secret:{cost:5000,key:"secretRoom",name:"тайная комната"}
+ };
+
+ const d=data[type];
+
+ if(S.money<d.cost){
+  toast("💰 Недостаточно золота");
+  return;
+ }
+
+ S.money-=d.cost;
+ S[d.key]++;
+
+ if(type==="walls"){
+  S.order=clamp(S.order+7,0,100);
+ }
+
+ log(`Построено улучшение: ${d.name}.`);
+ render();
+}
+
+/* -------------------------
+   TRADE
+------------------------- */
+
+function tradeFoodBuy(){
+
+ if(S.money<300){
+  toast("Недостаточно золота");
+  return;
+ }
+
+ S.money-=300;
+ S.food+=100;
+
+ log("Куплено 100 единиц провизии.");
+ render();
+}
+
+function tradeFoodSell(){
+
+ if(S.food<100){
+  toast("Недостаточно провизии");
+  return;
+ }
+
+ S.food-=100;
+ S.money+=220;
+
+ log("Продано 100 единиц провизии.");
+ render();
+}
+
+function buyHorses(){
+
+ if(S.money<1000){
+  toast("Нужно 1000 золота");
+  return;
+ }
+
+ S.money-=1000;
+ S.horses+=10;
+
+ log("Куплено 10 боевых лошадей.");
+ render();
+}
+
+/* -------------------------
+   EVENTS
+------------------------- */
+
+const EVENTS=[
+
+ {
+  title:"Вороны принесли письмо",
+  text:"Соседний лорд требует признать его старшим правителем.",
+  a:"Принести клятву",
+  b:"Отказать",
+  action:(x)=>{
+   if(x===1){
+    S.influence+=2;
+    S.reputation+=1;
+    log("Вы принесли клятву соседу.");
+   }else{
+    S.influence+=4;
+    S.reputation+=2;
+    log("Вы отказались. Напряжение растёт.");
+   }
+  }
+ },
+
+ {
+  title:"Неурожай",
+  text:"Засуха уничтожила часть урожая.",
+  a:"Раздать зерно",
+  b:"Сохранить запасы",
+  action:(x)=>{
+   if(x===1 && S.food>=150){
+    S.food-=150;
+    S.loyalty=clamp(S.loyalty+12,0,100);
+    log("Народ получил зерно из замковых амбаров.");
+   }else{
+    S.order=clamp(S.order-12,0,100);
+    S.loyalty=clamp(S.loyalty-7,0,100);
+    log("Народ страдает от голода.");
+   }
+  }
+ },
+
+ {
+  title:"Таинственный странник",
+  text:"Незнакомец утверждает, что знает местонахождение пропавшего наследника.",
+  a:"Выслушать",
+  b:"Изгнать",
+  action:(x)=>{
+   if(x===1){
+    S.influence+=6;
+    log("Странник сообщил вам загадочную тайну.");
+   }else{
+    S.order=clamp(S.order+2,0,100);
+    log("Странника изгнали из замка.");
+   }
+  }
+ },
+
+ {
+  title:"Пир у соседнего дома",
+  text:"Вас пригласили на пир. Это прекрасная возможность наладить отношения.",
+  a:"Заплатить за пир",
+  b:"Отказаться",
+  action:(x)=>{
+   if(x===1 && S.money>=1000){
+    S.money-=1000;
+    S.realms[
+     Math.floor(Math.random()*S.realms.length)
+    ].rel+=15;
+    S.reputation+=3;
+    log("Пир прошёл великолепно.");
+   }else{
+    S.reputation=Math.max(0,S.reputation-2);
+    log("Ваш отказ сочли оскорблением.");
+   }
+  }
+ },
+
+ {
+  title:"Пропавший караван",
+  text:"Купцы исчезли на дороге.",
+  a:"Отправить солдат",
+  b:"Не вмешиваться",
+  action:(x)=>{
+   if(x===1){
+    S.inf=Math.max(0,S.inf-10);
+    S.money+=750;
+    S.reputation+=3;
+    log("Караван найден. Купцы щедро заплатили.");
+   }else{
+    S.reputation=Math.max(0,S.reputation-3);
+    log("Купцы больше не доверяют вашему дому.");
+   }
+  }
+ },
+
+ {
+  title:"Убийство при дворе",
+  text:"Один из мелких лордов найден мёртвым.",
+  a:"Расследовать",
+  b:"Замять дело",
+  action:(x)=>{
+   if(x===1){
+    S.influence+=4;
+    S.order=clamp(S.order+4,0,100);
+    log("Убийца найден и казнён.");
+   }else{
+    S.money+=500;
+    S.reputation=Math.max(0,S.reputation-4);
+    log("Дело замяли после тайного соглашения.");
+   }
+  }
+ },
+
+ {
+  title:"Волчья зима",
+  text:"На севере выпал снег. Провизии становится мало.",
+  a:"Закупить продовольствие",
+  b:"Экономить",
+  action:(x)=>{
+   if(x===1 && S.money>=1000){
+    S.money-=1000;
+    S.food+=500;
+    log("Куплены дополнительные запасы.");
+   }else{
+    S.food=Math.max(0,S.food-250);
+    S.morale=clamp(S.morale-8,0,100);
+    log("Армия почувствовала нехватку продовольствия.");
+   }
+  }
+ },
+
+ {
+  title:"Золотой рудник",
+  text:"Разведчики обнаружили залежи золота.",
+  a:"Разработать",
+  b:"Оставить в тайне",
+  action:(x)=>{
+   if(x===1){
+    S.money+=3000;
+    S.influence+=2;
+    log("Рудник начал приносить золото.");
+   }else{
+    S.influence+=5;
+    log("Секрет рудника сохранён.");
+   }
+  }
+ }
+
+];
+
+function newEvent(){
+
+ const e=EVENTS[
+  Math.floor(Math.random()*EVENTS.length)
+ ];
+
+ const id="event_"+Date.now();
+
+ const div=document.createElement("div");
+ div.className="event";
+ div.id=id;
+
+ div.innerHTML=`
+  <h3>📜 ${e.title}</h3>
+  <p>${e.text}</p>
+  <button class="btn goldBtn"
+   onclick="resolveEvent('${id}',${EVENTS.indexOf(e)},1)">
+   ${e.a}
+  </button>
+  <button class="btn"
+   onclick="resolveEvent('${id}',${EVENTS.indexOf(e)},2)">
+   ${e.b}
+  </button>
+ `;
+
+ document.getElementById("eventList").prepend(div);
+}
+
+function resolveEvent(id,index,choice){
+
+ const e=EVENTS[index];
+
+ e.action(choice);
+
+ const el=document.getElementById(id);
+ if(el)el.remove();
+
+ render();
+ saveGame();
+}
+
+function randomCrisis(){
+
+ const crises=[
+  "На границе появились разбойники.",
+  "В городе вспыхнула болезнь.",
+  "Купцы объявили забастовку.",
+  "Один из вассалов перестал платить налоги.",
+  "На замок напали неизвестные всадники."
+ ];
+
+ const c=crises[
+  Math.floor(Math.random()*crises.length)
+ ];
+
+ S.order=clamp(S.order-5,0,100);
+ S.loyalty=clamp(S.loyalty-3,0,100);
+
+ log(`КРИЗИС: ${c}`);
+ news(`🔥 Кризис: ${c}`);
+
+ render();
+}
+
+/* -------------------------
+   TIME
+------------------------- */
+
+function nextMonth(){
+
+ S.month++;
+
+ if(S.month>12){
+
+  S.month=1;
+  S.year++;
+  S.age++;
+
+  S.money+=income();
+  S.food+=
+   120+
+   S.barns*100;
+
+  if(S.married && Math.random()<.22){
+   familyEvent();
+  }
+
+  log(`Наступил новый год — ${S.year}.`);
+ }
+
+ const upkeep=expenses();
+ const food=foodCost();
+
+ S.money-=upkeep;
+ S.food-=food;
+
+ if(S.money<0){
+  S.order=clamp(S.order-5,0,100);
+  S.loyalty=clamp(S.loyalty-5,0,100);
+ }
+
+ if(S.food<0){
+  S.food=0;
+  S.morale=clamp(S.morale-12,0,100);
+  S.loyalty=clamp(S.loyalty-7,0,100);
+  log("Голод! Армия осталась без провизии.");
+ }
+
+ /* случайное изменение отношений */
+
+ S.realms.forEach(r=>{
+  if(Math.random()<.15){
+   r.rel=clamp(
+    r.rel+(Math.random()<.5?-3:3),
+    -100,
+    100
+   );
+  }
+ });
+
+ /* дети взрослеют */
+
+ S.children.forEach(c=>c.age++);
+
+ /* шанс события */
+
+ if(Math.random()<.45){
+  const e=EVENTS[
+   Math.floor(Math.random()*EVENTS.length)
+  ];
+
+  news(`📜 Событие: ${e.title}`);
+ }
+
+ saveGame();
+ render();
+}
+
+setInterval(nextMonth,60000);
+
+/* -------------------------
+   ACHIEVEMENTS
+------------------------- */
+
+function renderAchievements(){
+
+ document.getElementById("achWall").textContent=
+  S.walls>1?"🏆 Выполнено":"🔒 Не выполнено";
+
+ document.getElementById("achWar").textContent=
+  S.wins>=5?"🏆 Выполнено":`🔒 ${S.wins}/5 побед`;
+
+ document.getElementById("achDip").textContent=
+  S.alliances>=3?"🏆 Выполнено":`🔒 ${S.alliances}/3 союзов`;
+
+ document.getElementById("achRich").textContent=
+  S.money>=50000?"🏆 Выполнено":"🔒 Нужно 50 000";
+
+ document.getElementById("achKing").textContent=
+  S.title==="Король"?"🏆 Выполнено":"🔒 Не выполнено";
+
+ document.getElementById("achLegend").textContent=
+  S.year>=850?"🏆 Выполнено":`🔒 ${S.year}/850`;
+}
+
+/* -------------------------
+   CROWN
+------------------------- */
+
+function claimThrone(){
+
+ if(S.influence<50){
+  toast("Нужно минимум 50 влияния");
+  return;
+ }
+
+ if(S.reputation<40){
+  toast("Репутация слишком низкая");
+  return;
+ }
+
+ if(S.wins<3){
+  toast("Нужно минимум 3 военные победы");
+  return;
+ }
+
+ S.title="Король";
+ S.influence+=20;
+ S.reputation+=10;
+
+ log("ВЫ ПОЛУЧИЛИ КОРОНУ! Дом Ворон объявлен правящей династией.");
+ news("👑 НОВЫЙ КОРОЛЬ! Ворон взошёл на Железный трон.");
+
+ toast("👑 ВЫ КОРОНОВАНЫ!");
+
+ render();
+}
+
+/* -------------------------
+   RENDER
+------------------------- */
+
+function render(){
+
+ /* top */
+
+ document.getElementById("topTitle").textContent=S.title;
+ document.getElementById("topMoney").textContent=money(S.money);
+ document.getElementById("topArmy").textContent=money(totalArmy());
+
+ /* home */
+
+ document.getElementById("money").textContent=money(S.money);
+ document.getElementById("armyCount").textContent=money(totalArmy());
+ document.getElementById("influence").textContent=money(S.influence);
+ document.getElementById("reputation").textContent=money(S.reputation);
+
+ document.getElementById("rulerName").textContent=
+  S.title+" "+S.name;
+
+ document.getElementById("rulerTitle").textContent=
+  S.title==="Король"?
+  "Правитель Семи королевств":
+  "Хранитель Вороньего Холма";
+
+ document.getElementById("familyRuler").textContent=
+  S.title+" "+S.name;
+
+ document.getElementById("health").textContent=S.health;
+ document.getElementById("familyHealth").textContent=S.health;
+ document.getElementById("rep").textContent=S.reputation;
+ document.getElementById("food").textContent=money(S.food);
+
+ document.getElementById("date").textContent=
+  `${S.year} год, месяц ${S.month}`;
+
+ document.getElementById("loyalty").textContent=
+  Math.round(S.loyalty)+"%";
+
+ document.getElementById("order").textContent=
+  Math.round(S.order)+"%";
+
+ document.getElementById("morale").textContent=
+  Math.round(S.morale)+"%";
+
+ document.getElementById("loyaltyBar").style.width=
+  S.loyalty+"%";
+
+ document.getElementById("orderBar").style.width=
+  S.order+"%";
+
+ document.getElementById("moraleBar").style.width=
+  S.morale+"%";
+
+ /* army */
+
+ document.getElementById("inf").textContent=money(S.inf);
+ document.getElementById("arch").textContent=money(S.arch);
+ document.getElementById("knights").textContent=money(S.knights);
+ document.getElementById("guard").textContent=money(S.guard);
+
+ document.getElementById("power").textContent=
+  money(militaryPower());
+
+ document.getElementById("armyMorale").textContent=
+  Math.round(S.morale)+"%";
+
+ document.getElementById("armyMoraleBar").style.width=
+  S.morale+"%";
+
+ document.getElementById("wallLevelArmy").textContent=S.walls;
+
+ document.getElementById("foodCost").textContent=
+  money(foodCost());
+
+ document.getElementById("armyCost").textContent=
+  money(expenses())+" зол.";
+
+ /* battle */
+
+ document.getElementById("battlePlayerPower").textContent=
+  money(militaryPower());
+
+ /* economy */
+
+ document.getElementById("treasury").textContent=
+  money(S.money);
+
+ document.getElementById("income").textContent=
+  money(income());
+
+ document.getElementById("expenses").textContent=
+  money(expenses());
+
+ document.getElementById("taxRate").textContent=
+  S.tax==="low"?
+  "Низкие":
+  S.tax==="high"?
+  "Высокие":
+  "Средние";
+
+ /* buildings */
+
+ document.getElementById("walls").textContent=S.walls;
+ document.getElementById("forge").textContent=S.forge;
+ document.getElementById("barns").textContent=S.barns;
+ document.getElementById("secretRoom").textContent=S.secretRoom;
+
+ /* spies */
+
+ document.getElementById("spies").textContent=S.spies;
+
+ /* family */
+
+ document.getElementById("age").textContent=S.age;
+ document.getElementById("heir").textContent=S.heir;
+
+ document.getElementById("children").innerHTML=
+  S.children.length?
+  S.children.map(c=>
+   `<div class="notice">👶 ${c.name}, возраст ${c.age}</div>`
+  ).join(""):
+  "Пока нет детей.";
+
+ /* identity */
+
+ document.getElementById("houseDisplay").textContent=S.house;
+ document.getElementById("mottoDisplay").textContent=
+  "«"+S.motto+"»";
+
+ /* news */
+
+ document.getElementById("news").innerHTML=
+  S.news.slice(0,5).map(n=>
+   `<div class="notice">${n}</div>`
+  ).join("");
+
+ renderDiplomacy();
+ renderLog();
+ renderAchievements();
+}
+
+/* -------------------------
+   LOG
+------------------------- */
+
+function renderLog(){
+
+ document.getElementById("chronicleLog").innerHTML=
+  S.logs.map(x=>
+   `<div>${x}</div>`
+  ).join("");
+}
+
+/* -------------------------
+   INTRO
+------------------------- */
+
+function closeIntro(){
+ document.getElementById("intro").style.display="none";
+ startMusic();
+}
+
+/* -------------------------
+   MUSIC — TRON
+------------------------- */
+
+let audioCtx=null;
+let musicTimer=null;
+let musicPlaying=false;
+let masterGain=null;
+
+function startMusic(){
+
+ if(musicPlaying)return;
+
+ try{
+
+  audioCtx=
+   audioCtx||
+   new (window.AudioContext||window.webkitAudioContext)();
+
+  if(audioCtx.state==="suspended"){
+   audioCtx.resume();
+  }
+
+  masterGain=
+   audioCtx.createGain();
+
+  masterGain.gain.value=.055;
+  masterGain.connect(audioCtx.destination);
+
+  musicPlaying=true;
+
+  musicLoop();
+
+  document.getElementById("musicBtn").textContent=
+   "🔊 TRON";
+
+ }catch(e){
+
+  toast("Браузер не разрешил аудио");
+
+ }
+}
+
+function stopMusic(){
+
+ musicPlaying=false;
+
+ if(musicTimer){
+  clearTimeout(musicTimer);
+  musicTimer=null;
+ }
+
+ if(masterGain){
+  masterGain.gain.exponentialRampToValueAtTime(
+   .0001,
+   audioCtx.currentTime+.5
+  );
+ }
+
+ document.getElementById("musicBtn").textContent=
+  "🔇 TRON";
+}
+
+function toggleMusic(){
+
+ if(musicPlaying){
+  stopMusic();
+ }else{
+  startMusic();
+ }
+}
+
+/*
+   Атмосферная мелодия TRON.
+   Генерируется синтезатором.
+*/
+
+function note(freq,time,duration,type="sine",volume=.04){
+
+ if(!audioCtx||!musicPlaying)return;
+
+ const osc=audioCtx.createOscillator();
+ const gain=audioCtx.createGain();
+
+ osc.type=type;
+ osc.frequency.value=freq;
+
+ gain.gain.setValueAtTime(.0001,time);
+ gain.gain.exponentialRampToValueAtTime(
+  volume,
+  time+.04
+ );
+
+ gain.gain.exponentialRampToValueAtTime(
+  .0001,
+  time+duration
+ );
+
+ osc.connect(gain);
+ gain.connect(masterGain);
+
+ osc.start(time);
+ osc.stop(time+duration+.05);
+}
+
+function musicLoop(){
+
+ if(!musicPlaying)return;
+
+ const now=audioCtx.currentTime+.05;
+
+ const scale=[
+  110,
+  123.47,
+  146.83,
+  164.81,
+  196,
+  220,
+  246.94,
+  293.66
+ ];
+
+ const melody=[
+  0,2,4,2,
+  0,3,5,4,
+  2,4,6,4,
+  1,3,5,3
+ ];
+
+ const beat=.48;
+
+ melody.forEach((n,i)=>{
+
+  note(
+   scale[n],
+   now+i*beat,
+   .36,
+   "triangle",
+   .035
+  );
+
+  if(i%4===0){
+
+   note(
+    scale[n]/2,
+    now+i*beat,
+    1.5,
+    "sine",
+    .025
+   );
+
+  }
+
+ });
+
+ /*
+   Низкий пульс
+ */
+
+ for(let i=0;i<16;i+=2){
+
+  note(
+   55,
+   now+i*beat,
+   .28,
+   "sine",
+   .025
+  );
+
+ }
+
+ musicTimer=setTimeout(
+  musicLoop,
+  melody.length*beat*1000
+ );
+}
+
+/* -------------------------
+   STARTUP
+------------------------- */
+
+render();
+
+/*
+  Не запускаем звук автоматически:
+  мобильные браузеры часто блокируют autoplay.
+*/
+
+if(!localStorage.getItem("IRON_THRONE_INTRO")){
+ document.getElementById("intro").style.display="flex";
+ localStorage.setItem("IRON_THRONE_INTRO","1");
+}
+
+</script>
+
+</body>
+</html>
